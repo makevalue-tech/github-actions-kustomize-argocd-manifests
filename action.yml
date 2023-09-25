@@ -1,0 +1,41 @@
+name: GitHub actions kustomize argocd manifests
+author: Gabriel Ferreira
+description: GitHub action used kustomize applications manifests
+branding:
+  icon: feather
+  color: gray-dark
+
+inputs:
+  app-name:
+    description: 'The app name'
+    required: true
+  app-registry:
+    description: 'The Docker image registry name'
+    required: true
+  github-actor:
+    description: 'The github commit actor ID'
+    required: true
+  github-deploy-ssh-key:
+    description: 'The github deploy SSH key to clone K8S manifests'
+    required: true
+  github-token:
+    description: 'The github token to create PR'
+    required: true
+  k8s-manifest-repo-name:
+    description: 'The name of K8S manifests repository'
+    required: true
+  k8s-manifest-repo-ssh:
+    description: 'The SSH of K8S manifests repository'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.app-name }}
+    - ${{ inputs.app-registry }}
+    - ${{ inputs.github-actor }}
+    - ${{ inputs.github-deploy-ssh-key }}
+    - ${{ inputs.github-token }}
+    - ${{ inputs.k8s-manifest-repo-name }}
+    - ${{ inputs.k8s-manifest-repo-ssh }}
